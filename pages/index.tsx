@@ -41,7 +41,7 @@ const Home: NextPage = () => {
 
       <main className="mt-12 flex justify-center">
         <div>
-          <div className="grid grid-cols-4 gap-16">
+          <div className="grid lg:grid-cols-4 gap-16">
             {cars.map(({ id, model, make, year, picture }) => (
               <Card
                 key={id}
