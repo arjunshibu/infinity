@@ -1,9 +1,7 @@
 import { readFileSync } from 'fs';
-import prisma, { connect, disconnect } from './client';
+import prisma from './client';
 
 const data = JSON.parse(readFileSync('./prisma/data.json', 'utf-8'));
-
-connect(disconnect);
 
 (() => {
   prisma.car
@@ -15,5 +13,3 @@ connect(disconnect);
       throw e;
     });
 })();
-
-disconnect();

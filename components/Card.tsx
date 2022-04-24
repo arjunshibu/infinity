@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-interface Props {
+type Props = {
   model: string;
   make: string;
   year: number;
   picture: string;
-}
+};
 
 const Card: FC<Props> = ({ model, make, year, picture }) => (
   <div className="card w-72 bg-base-100 shadow-xl">

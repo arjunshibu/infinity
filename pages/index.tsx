@@ -1,8 +1,36 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import Car from '../types/car';
 import Card from '../components/Card';
+import Spinner from '../components/Spinner';
+import { atEnd } from '../utils/scroll';
 
 const Home: NextPage = () => {
+  const [cars, setCars] = useState<Car[]>([]);
+  const [load, setLoad] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const scrolling = () => {
+    if (atEnd()) {
+      setLoad(load + 1);
+      setLoading(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', scrolling, { passive: true });
+  });
+
+  useEffect(() => {
+    fetch(`/api/cars?next=${cars.length === 0 ? '0' : '1'}`)
+      .then((res) => res.json())
+      .then((newCars) => {
+        setLoading(false);
+        setCars((prevCars) => [...prevCars, ...newCars]);
+      });
+  }, [load]);
+
   return (
     <div>
       <Head>
@@ -12,32 +40,21 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="mt-12 flex justify-center">
-        <div className="grid grid-cols-4 gap-16">
-          <Card
-            model="Mazda6"
-            make="Mazda"
-            year={2011}
-            picture="https://user-images.githubusercontent.com/43996156/164971181-606dd662-d795-4db6-9ca7-5972188ccd4a.png"
-          />
-          <Card
-            model="Mazda6"
-            make="Mazda"
-            year={2011}
-            picture="https://user-images.githubusercontent.com/43996156/164971181-606dd662-d795-4db6-9ca7-5972188ccd4a.png"
-          />
-          <Card
-            model="Mazda6"
-            make="Mazda"
-            year={2011}
-            picture="https://user-images.githubusercontent.com/43996156/164971181-606dd662-d795-4db6-9ca7-5972188ccd4a.png"
-          />
-          <Card
-            model="Mazda6"
-            make="Mazda"
-            year={2011}
-            picture="https://user-images.githubusercontent.com/43996156/164971181-606dd662-d795-4db6-9ca7-5972188ccd4a.png"
-          />
+        <div>
+          <div className="grid grid-cols-4 gap-16">
+            {cars.map(({ id, model, make, year, picture }) => (
+              <Card
+                key={id}
+                model={model}
+                make={make}
+                year={year}
+                picture={picture}
+              />
+            ))}
+          </div>
         </div>
+
+        <div className="fixed bottom-5">{loading && <Spinner />}</div>
       </main>
     </div>
   );
