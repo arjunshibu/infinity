@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Card from '../components/Card';
 
 const Home: NextPage = () => {
   return (
@@ -10,8 +11,33 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1 className="text-3xl font-bold">Hello world!</h1>
+      <main className="mt-12 flex justify-center">
+        <div className="grid grid-cols-4 gap-16">
+          <Card
+            model="Mazda6"
+            make="Mazda"
+            year={2011}
+            picture="https://user-images.githubusercontent.com/43996156/164971181-606dd662-d795-4db6-9ca7-5972188ccd4a.png"
+          />
+          <Card
+            model="Mazda6"
+            make="Mazda"
+            year={2011}
+            picture="https://user-images.githubusercontent.com/43996156/164971181-606dd662-d795-4db6-9ca7-5972188ccd4a.png"
+          />
+          <Card
+            model="Mazda6"
+            make="Mazda"
+            year={2011}
+            picture="https://user-images.githubusercontent.com/43996156/164971181-606dd662-d795-4db6-9ca7-5972188ccd4a.png"
+          />
+          <Card
+            model="Mazda6"
+            make="Mazda"
+            year={2011}
+            picture="https://user-images.githubusercontent.com/43996156/164971181-606dd662-d795-4db6-9ca7-5972188ccd4a.png"
+          />
+        </div>
       </main>
     </div>
   );
